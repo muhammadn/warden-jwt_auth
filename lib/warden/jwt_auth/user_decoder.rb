@@ -31,6 +31,7 @@ module Warden
       # argument
       def call(token, scope, aud)
         payload = TokenDecoder.new.call(token)
+	payload['scp'] = 'user' # override scope
         check_valid_claims(payload, scope, aud)
         user = helper.find_user(payload)
         check_valid_user(payload, user, scope)
@@ -40,7 +41,7 @@ module Warden
       private
 
       def check_valid_claims(payload, scope, aud)
-        raise Errors::WrongScope, 'wrong scope' unless helper.scope_matches?(payload, scope)
+        # raise Errors::WrongScope, 'wrong scope' unless helper.scope_matches?(payload, scope)
         raise Errors::WrongAud, 'wrong aud' unless helper.aud_matches?(payload, aud)
       end
 
