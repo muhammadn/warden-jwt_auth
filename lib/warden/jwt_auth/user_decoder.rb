@@ -40,7 +40,6 @@ module Warden
       private
 
       def check_valid_claims(payload, scope, aud)
-        raise Errors::WrongScope, 'wrong scope' unless helper.scope_matches?(payload, scope)
         raise Errors::WrongAud, 'wrong aud' unless helper.aud_matches?(payload, aud)
       end
 
